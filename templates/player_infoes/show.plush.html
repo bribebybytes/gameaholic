@@ -1,0 +1,633 @@
+<head>
+    <link rel="stylesheet" href=" <%=rootPath() %>assets/css/player.css" media="all">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Abel');
+
+    html,
+    body {
+        font-family: Abel, Arial, Verdana, sans-serif;
+    }
+
+    .center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+    }
+
+    .card {
+        width: 450px;
+        height: 250px;
+        background-color: #fff;
+        background: linear-gradient(#f8f8f8, #fff);
+        box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+        border-radius: 6px;
+        overflow: hidden;
+        position: relative;
+        margin: 1.5rem;
+    }
+
+    .card h1 {
+        text-align: center;
+    }
+
+    .card .additional {
+        position: absolute;
+        width: 150px;
+        height: 100%;
+        background: linear-gradient(#dE685E, #EE786E);
+        transition: width 0.4s;
+        overflow: hidden;
+        z-index: 2;
+    }
+
+    .card.green .additional {
+        background: linear-gradient(#92bCa6, #A2CCB6);
+    }
+
+
+    .card:hover .additional {
+        width: 100%;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .card .additional .user-card {
+        width: 150px;
+        height: 100%;
+        position: relative;
+        float: left;
+    }
+
+    .card .additional .user-card::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 10%;
+        right: -2px;
+        height: 80%;
+        border-left: 2px solid rgba(0, 0, 0, 0.025);
+    }
+
+    .card .additional .user-card .level,
+    .card .additional .user-card .points,
+    .card .additional .user-card .achievement {
+        top: 20%;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 0.75em;
+        font-weight: bold;
+        background: rgba(0, 0, 0, 0.15);
+        padding: 0.125rem 0.75rem;
+        border-radius: 100px;
+        white-space: nowrap;
+    }
+
+    .card .additional .user-card .points {
+        top: 85%;
+    }
+
+    .card .additional .user-card .achievement {
+        top: 5%;
+        color: white;
+        border-radius: 20px;
+        background: black;
+        font-size: 0.75em;
+    }
+
+    .card .additional .user-card svg {
+        top: 50%;
+    }
+
+    .card .additional .more-info {
+        width: 300px;
+        float: left;
+        position: absolute;
+        left: 150px;
+        height: 100%;
+    }
+
+    .card .additional .more-info h1 {
+        color: #fff;
+        margin-bottom: 0;
+    }
+
+    .card.green .additional .more-info h1 {
+        color: #224C36;
+    }
+
+    .card .additional .coords {
+        margin: 0 1rem;
+        color: #fff;
+        font-size: 1rem;
+    }
+
+    .card.green .additional .coords {
+        color: #325C46;
+    }
+
+    .card .additional .coords span+span {
+        float: right;
+    }
+
+    .card .additional .stats {
+        font-size: 2rem;
+        display: flex;
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+        top: auto;
+        color: #fff;
+    }
+
+    .card.green .additional .stats {
+        color: #325C46;
+    }
+
+    .card .additional .stats>div {
+        flex: 1;
+        text-align: center;
+    }
+
+    .card .additional .stats i {
+        display: block;
+    }
+
+    .card .additional .stats div.title {
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .card .additional .stats div.value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .card .additional .stats div.value.infinity {
+        font-size: 2.5rem;
+    }
+
+    .card .general {
+        width: 300px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
+        box-sizing: border-box;
+        padding: 1rem;
+        padding-top: 0;
+    }
+
+    .card .general .more {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        font-size: 0.9em;
+    }
+
+
+    .timeline {
+        margin-top: 20px;
+        position: relative;
+        background-color: #fff;
+        background: linear-gradient(#f8f8f8, #fff);
+        box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+        left: 20%;
+    }
+
+    .timeline:before {
+        position: absolute;
+        content: '';
+        width: 4px;
+        height: calc(100% + 50px);
+        background: rgb(138, 145, 150);
+        background: -moz-linear-gradient(left, rgba(138, 145, 150, 1) 0%, rgba(122, 130, 136, 1) 60%, rgba(98, 105, 109, 1) 100%);
+        background: -webkit-linear-gradient(left, rgba(138, 145, 150, 1) 0%, rgba(122, 130, 136, 1) 60%, rgba(98, 105, 109, 1) 100%);
+        background: linear-gradient(to right, rgba(138, 145, 150, 1) 0%, rgba(122, 130, 136, 1) 60%, rgba(98, 105, 109, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8a9196', endColorstr='#62696d', GradientType=1);
+        left: 14px;
+        top: 5px;
+        border-radius: 4px;
+    }
+
+    .timeline-month {
+        position: relative;
+        padding: 4px 15px 4px 35px;
+        background-color: skyblue;
+        display: inline-block;
+        width: auto;
+        border-radius: 40px;
+        border: 1px solid #17191B;
+        border-right-color: black;
+        margin-bottom: 30px;
+    }
+
+    .timeline-month span {
+        position: absolute;
+        top: -1px;
+        left: calc(100% - 10px);
+        white-space: nowrap;
+        display: inline-block;
+        background-color: white;
+        padding: 4px 10px 4px 20px;
+        border-top-right-radius: 40px;
+        border-bottom-right-radius: 40px;
+        border: 1px solid black;
+        box-sizing: border-box;
+    }
+
+    .timeline-month:before {
+        position: absolute;
+        content: '';
+        width: 20px;
+        height: 20px;
+        background: rgb(138, 145, 150);
+        background: -moz-linear-gradient(top, rgba(138, 145, 150, 1) 0%, rgba(122, 130, 136, 1) 60%, rgba(112, 120, 125, 1) 100%);
+        background: -webkit-linear-gradient(top, rgba(138, 145, 150, 1) 0%, rgba(122, 130, 136, 1) 60%, rgba(112, 120, 125, 1) 100%);
+        background: linear-gradient(to bottom, rgba(138, 145, 150, 1) 0%, rgba(122, 130, 136, 1) 60%, rgba(112, 120, 125, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8a9196', endColorstr='#70787d', GradientType=0);
+        border-radius: 100%;
+        border: 1px solid #17191B;
+        left: 5px;
+    }
+
+    .timeline-section {
+        padding-left: 35px;
+        display: block;
+        position: relative;
+        margin-bottom: 30px;
+    }
+
+    .timeline-date {
+        margin-bottom: 15px;
+        padding: 2px 15px;
+        background: linear-gradient(#74cae3, #5bc0de 60%, #4ab9db);
+        position: relative;
+        display: inline-block;
+        border-radius: 20px;
+        border: 1px solid #17191B;
+        color: #fff;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    }
+
+    .timeline-section:before {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 1px;
+        background-color: #444950;
+        top: 12px;
+        left: 20px;
+    }
+
+    .timeline-section:after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: linear-gradient(to bottom, rgba(138, 145, 150, 1) 0%, rgba(122, 130, 136, 1) 60%, rgba(112, 120, 125, 1) 100%);
+        top: 7px;
+        left: 11px;
+        border: 1px solid #17191B;
+        border-radius: 100%;
+    }
+
+    .timeline-section .col-sm-4 {
+        margin-bottom: 15px;
+    }
+
+    .timeline-box {
+        position: relative;
+
+        background-color: lightblue;
+        border-radius: 15px;
+        border-top-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border: 1px solid #17191B;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .box-icon {
+        position: absolute;
+        right: 5px;
+        top: 0px;
+    }
+
+    .box-title {
+        padding: 5px 15px;
+        border-bottom: 1px solid #17191B;
+    }
+
+    .box-title i {
+        margin-right: 5px;
+    }
+
+    .box-content {
+        padding: 5px 15px;
+        background-color: lightblue;
+    }
+
+    .box-content strong {
+        color: #666;
+        font-style: italic;
+        margin-right: 5px;
+    }
+
+    .box-item {
+        margin-bottom: 5px;
+    }
+
+    .box-footer {
+        padding: 5px 15px;
+        border-top: 1px solid #17191B;
+        background-color: #444950;
+        text-align: right;
+        font-style: italic;
+    }
+</style>
+
+<div>
+    <div class="center" style="left:15%; top:30%">
+
+        <div class="card">
+            <div class="additional">
+                <div class="user-card">
+                    <div class="achievement center">
+                        <%= playerInfo.PcurAchive %>
+                    </div>
+                    <div class="level center">
+                        Level
+                        <%= playerInfo.Plevel %>
+                    </div>
+                    <div class="points center">
+                        <%= playerInfo.Pscore %> Points
+                    </div>
+
+                    <style>
+                        .skin {
+                            fill: #eab38f;
+                        }
+
+                        .eyes {
+                            fill: #1f1f1f;
+                        }
+
+                        .hair {
+                            fill: #2f1b0d;
+                        }
+
+                        .line {
+                            fill: none;
+                            stroke: #2f1b0d;
+                            stroke-width: 2px;
+                        }
+                    </style>
+                    <div class="center" style="left: 50%">
+                        <a href="/players/<%=playerInfo.ID%>">
+                            <img src="<%= playerInfo.Pavatar %>" width="125" height="125" />
+                        </a>
+                    </div>
+                </div>
+                <div class="more-info">
+                    <h1>
+                        <%= playerInfo.PcurAchive %>
+                    </h1>
+                    <div class="coords">
+                        <span style="font-size: 1.5em">Promoted On</span>
+                        <span style="font-size: 1.5em">
+                            <%= playerInfo.UpdatedAt.Format("02 Jan 2006") %>
+                        </span>
+                    </div>
+                    <div class="coords">
+                        <span style="font-size: 1.5em">Email Id</span>
+                        <span style="font-size: 1.5em">
+                            <%= playerInfo.Pemailid %>
+                        </span>
+                    </div>
+                    <div class="stats">
+                        <div>
+                            <div class="title">Awards</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="general">
+                <h1>
+                    <%= playerInfo.Pname %>
+                </h1>
+                <p>
+                    <div class="stats">
+                        <div>
+                            <div>
+                                <%= for (badge) in playerInfo.Badges { %>
+                                    <img id="img-badge1" src="<%= badge %>" height="30" width="30"> </img>
+                                    <% } 
+                            %>
+                            </div>
+                        </div>
+                    </div>
+                </p>
+                <span class="more">Mouse over the card for more info</span>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+<div class="container">
+
+    <div class="timeline" style="overflow-y:auto; white-space:nowrap">
+            <div class="timeline-month">
+                Feb, 2020
+                 <span>3 Entries</span>
+            </div>
+            <div class="timeline-section">
+                <div class="timeline-date">
+                    11, Tuesday
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="timeline-box">
+                            <div class="box-title">
+                                <i class="fa fa-asterisk text-success" aria-hidden="true"></i> PR Merged
+                            </div>
+                            <div class="box-content">
+                                <div class="box-item">
+                                    <strong>Project</strong>: CONT</div>
+                                <div class="box-item">
+                                    <strong>Repository</strong>: gameaholic</div>
+                                <div class="box-item">
+                                    <strong>Start Date</strong>: 02/11/2020</div>
+                            </div>
+                            <div class="box-footer"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="timeline-box">
+                            <div class="box-title">
+                                <i class="fa fa-pencil text-info" aria-hidden="true"></i> Ticket Updated
+                            </div>
+                            <div class="box-content">
+                                <a href="" class="btn btn-xs btn-default pull-right">Details</a>
+                                <div class="box-item">
+                                    <strong>Issue Type</strong>: Story</div>
+                                <div class="box-item">
+                                    <strong>Start Date</strong>: 02/11/2020</div>
+                            </div>
+                            <div class="box-footer"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="timeline-section">
+                <div class="timeline-date">
+                    10, Monday
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="timeline-box">
+                            <div class="box-title">
+                                <i class="fa fa-pencil text-info" aria-hidden="true"></i> Ticket Updated
+                            </div>
+                            <div class="box-content">
+                                <a href="" class="btn btn-xs btn-default pull-right">Details</a>
+                                <div class="box-item">
+                                    <strong>Issue Type</strong>: User Story</div>
+                                <div class="box-item">
+                                    <strong>Story points</strong>: 5</div>
+                                <div class="box-item">
+                                    <strong>Start Date</strong>: 02/10/2020</div>
+                            </div>
+                            <div class="box-footer"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="timeline-box">
+                            <div class="box-title">
+                                <i class="fa fa-tasks text-primary" aria-hidden="true"></i> PR Approved
+                            </div>
+                            <div class="box-content">
+                                <div class="box-item">
+                                    <strong>Project</strong>: CONT</div>
+                                <div class="box-item">
+                                    <strong>Repository</strong>: gameaholic</div>
+                                <div class="box-item">
+                                    <strong>Start Date</strong>: 02/10/2020</div>
+                            </div>
+                            <div class="box-footer"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="timeline-box">
+                            <div class="box-title">
+                                <i class="fa fa-asterisk text-success" aria-hidden="true"></i> PR Merged
+                            </div>
+                            <div class="box-content">
+                                <div class="box-item">
+                                    <strong>Project</strong>: CONT</div>
+                                <div class="box-item">
+                                    <strong>Repository</strong>: gameaholic</div>
+                                <div class="box-item">
+                                    <strong>Start Date</strong>: 02/10/2020</div>
+                            </div>
+                            <div class="box-footer"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="timeline-box">
+                            <div class="box-title">
+                                <i class="fa fa-asterisk text-success" aria-hidden="true"></i> PR Merged
+                            </div>
+                            <div class="box-content">
+                                <div class="box-item">
+                                    <strong>Project</strong>: CONT</div>
+                                <div class="box-item">
+                                    <strong>Repository</strong>: gameaholic</div>
+                                <div class="box-item">
+                                    <strong>Start Date</strong>: 02/10/2020</div>
+                            </div>
+                            <div class="box-footer"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="timeline-box">
+                            <div class="box-title">
+                                <i class="fa fa-asterisk text-success" aria-hidden="true"></i> PR Merged
+                            </div>
+                            <div class="box-content">
+                                <div class="box-item">
+                                    <strong>Project</strong>: CONT</div>
+                                <div class="box-item">
+                                    <strong>Repository</strong>: gameaholic</div>
+                                <div class="box-item">
+                                    <strong>Start Date</strong>: 02/10/2020</div>
+                            </div>
+                            <div class="box-footer"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="timeline-section">
+                <div class="timeline-date">
+                    09, Sunday
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="timeline-box">
+                            <div class="box-title">
+                                <i class="fa fa-asterisk text-success" aria-hidden="true"></i> PR Merged
+                            </div>
+                            <div class="box-content">
+                                <div class="box-item">
+                                    <strong>Project</strong>: CONT</div>
+                                <div class="box-item">
+                                    <strong>Repository</strong>: gameaholic</div>
+                                <div class="box-item">
+                                    <strong>Start Date</strong>: 02/09/2020</div>
+                            </div>
+                            <div class="box-footer">- Carol</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="timeline-box">
+                            <div class="box-title">
+                                <i class="fa fa-asterisk text-success" aria-hidden="true"></i> PR Merged
+                            </div>
+                            <div class="box-content">
+                                <div class="box-item">
+                                    <strong>Project</strong>: CONT</div>
+                                <div class="box-item">
+                                    <strong>Repository</strong>: gameaholic</div>
+                                <div class="box-item">
+                                    <strong>Start Date</strong>: 02/11/2020</div>
+                            </div>
+                            <div class="box-footer"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+    </div>
+</div>

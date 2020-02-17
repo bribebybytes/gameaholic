@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1>New Achievement</h1>
+</div>
+
+<%= formFor(achievement, {action: achievementsPath(), method: "POST"}) { %>
+  <%= partial("achievements/form.html") %>
+  <%= linkTo(achievementsPath(), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>

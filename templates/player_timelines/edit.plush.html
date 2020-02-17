@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1>Edit PlayerTimeline</h1>
+</div>
+
+<%= formFor(playerTimeline, {action: playerTimelinePath({ player_timeline_id: playerTimeline.ID }), method: "PUT"}) { %>
+  <%= partial("player_timelines/form.html") %>
+  <%= linkTo(playerTimelinePath({ player_timeline_id: playerTimeline.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>

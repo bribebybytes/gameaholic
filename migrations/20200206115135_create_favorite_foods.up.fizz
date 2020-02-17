@@ -1,0 +1,6 @@
+create_table("favorite_foods") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("user", "uuid", {})
+	t.Column("food", "text", {})
+	t.Timestamps()
+}

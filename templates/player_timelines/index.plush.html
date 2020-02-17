@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h1>PlayerTimelines</h1>
+</div>
+<ul class="list-unstyled list-inline">
+  <li>
+    <%= linkTo(newPlayerTimelinesPath(), {class: "btn btn-primary"}) { %>
+      Create New PlayerTimeline
+    <% } %>
+  </li>
+</ul>
+
+<table class="table table-striped">
+  <thead>
+  <th>PlayerID</th>
+    <th>Event</th>
+    <th>EventProvider</th>
+    <th>EventURL</th>
+    <th>CreationMonthYear</th>
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
+    <%= for (playerTimeline) in playerTimelines { %>
+      <tr>
+      <td><%= playerTimeline.PlayerID %></td>
+        <td><%= playerTimeline.Event %></td>
+        <td><%= playerTimeline.EventProvider %></td>
+        <td><%= playerTimeline.EventURL %></td>
+        <td><%= playerTimeline.CreationMonthYear %></td>
+        <td>
+          <div class="pull-right">
+            <%= linkTo(playerTimelinePath({ player_timeline_id: playerTimeline.ID }), {class: "btn btn-info", body: "View"}) %>
+            <%= linkTo(editPlayerTimelinePath({ player_timeline_id: playerTimeline.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+            <%= linkTo(playerTimelinePath({ player_timeline_id: playerTimeline.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+          </div>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= paginator(pagination) %>
+</div>

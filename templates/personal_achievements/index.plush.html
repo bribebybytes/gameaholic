@@ -1,0 +1,41 @@
+<div class="page-header">
+  <h1>PersonalAchievements</h1>
+</div>
+<ul class="list-unstyled list-inline">
+  <li>
+    <%= linkTo(newPersonalAchievementsPath(), {class: "btn btn-primary"}) { %>
+      Create New PersonalAchievement
+    <% } %>
+  </li>
+</ul>
+
+<table class="table table-striped">
+  <thead>
+  <th>PaID</th>
+    <th>PlayerID</th>
+    <th>AchievID</th>
+    <th>AchievDate</th>
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
+    <%= for (personalAchievement) in personalAchievements { %>
+      <tr>
+      <td><%= personalAchievement.PaID %></td>
+        <td><%= personalAchievement.PlayerID %></td>
+        <td><%= personalAchievement.AchievID %></td>
+        <td><%= personalAchievement.AchievDate %></td>
+        <td>
+          <div class="pull-right">
+            <%= linkTo(personalAchievementPath({ personal_achievement_id: personalAchievement.ID }), {class: "btn btn-info", body: "View"}) %>
+            <%= linkTo(editPersonalAchievementPath({ personal_achievement_id: personalAchievement.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+            <%= linkTo(personalAchievementPath({ personal_achievement_id: personalAchievement.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+          </div>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= paginator(pagination) %>
+</div>

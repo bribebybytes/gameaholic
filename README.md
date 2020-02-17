@@ -1,2 +1,1 @@
-# gameaholic
-End to End "Gamification for Work" portal
+End to End "Gamification for work" portal.

@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1>New Player</h1>
+</div>
+
+<%= formFor(player, {action: playersPath(), method: "POST"}) { %>
+  <%= partial("players/form.html") %>
+  <%= linkTo(playersPath(), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>

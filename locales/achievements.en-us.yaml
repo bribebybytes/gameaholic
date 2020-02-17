@@ -1,0 +1,6 @@
+- id: "achievement.created.success"
+  translation: "Achievement was successfully created."
+- id: "achievement.updated.success"
+  translation: "Achievement was successfully updated."
+- id: "achievement.destroyed.success"
+  translation: "Achievement was successfully destroyed."

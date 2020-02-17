@@ -1,0 +1,53 @@
+<div class="page-header">
+  <h1>Players</h1>
+</div>
+<ul class="list-unstyled list-inline">
+  <li>
+    <%= linkTo(newPlayersPath(), {class: "btn btn-primary"}) { %>
+      Create New Player
+    <% } %>
+  </li>
+</ul>
+
+<table class="table table-striped">
+  <thead>
+  <th>Pid</th>
+    <th>Pname</th>
+    <th>Pavatar</th>
+    <th>Pemailid</th>
+    <th>PcurAchive</th>
+    <th>Pscore</th>
+    <th>Plevel</th>
+    <th>BitbucketUname</th>
+    <th>JiraUname</th>
+    <th>ConfluenceUname</th>
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
+    <%= for (player) in players { %>
+      <tr>
+      <td><%= player.Pid %></td>
+        <td><%= player.Pname %></td>
+        <td><%= player.Pavatar %></td>
+        <td><%= player.Pemailid %></td>
+        <td><%= player.PcurAchive %></td>
+        <td><%= player.Pscore %></td>
+        <td><%= player.Plevel %></td>
+        <td><%= player.BitbucketUname %></td>
+        <td><%= player.JiraUname %></td>
+        <td><%= player.ConfluenceUname %></td>
+        <td>
+          <div class="pull-right">
+            <%= linkTo(playerPath({ player_id: player.ID }), {class: "btn btn-info", body: "View"}) %>
+            <%= linkTo(editPlayerPath({ player_id: player.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+            <%= linkTo(playerPath({ player_id: player.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+          </div>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= paginator(pagination) %>
+</div>

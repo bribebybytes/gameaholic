@@ -1,0 +1,626 @@
+<head>
+    <link rel="stylesheet" href="<%=rootPath() %>/assets/css/player.css" media="all">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Abel');
+
+    html,
+    body {
+        font-family: Abel, Arial, Verdana, sans-serif;
+        background-image: "<%=rootPath()%>assets/images/bicycles-bikers-blur-blurred.jpg%>";
+        background-color: lightskyblue
+    }
+
+    .parentDiv {
+        position:relative
+    }
+
+    .scroll {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        left: 15%;
+        
+
+    }
+
+    .topDiv {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+    }
+
+        .center {
+        position: absolute;
+        top: 49%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+    }
+        .bottomDiv {
+        position: fixed;
+        top: 63%;
+        left: 10%;
+        border: 10px border-style lightblue;
+        border-color: lightblue;
+        border-style: solid;
+        overflow:auto;
+        width: 85%;
+        white-space: nowrap;
+    }
+    .card {
+        display: inline-block;
+        width: 443px;
+        height: 240px;
+        background-color: #fff;
+        background: linear-gradient(#f8f8f8, #fff);
+        box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+        border-radius: 6px;
+        position: relative;
+        margin: 1.5rem;
+    }
+
+    .card h1 {
+        text-align: center;
+    }
+
+    .card .additional {
+        position: absolute;
+        width: 150px;
+        height: 100%;
+            background: linear-gradient(#dE685E, #EE786E);
+        transition: width 0.4s;
+        overflow: hidden;
+        z-index: 2;
+    }
+
+    .card.green .additional {
+        background: linear-gradient(#92bCa6, #A2CCB6);
+    }
+    .card.gold .additional {
+        background: linear-gradient(lightgoldenrodyellow, gold);
+    }
+
+    .card:hover .additional {
+        width: 100%;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .card .additional .user-card {
+        width: 150px;
+        height: 100%;
+        position: relative;
+        float: left;
+    }
+
+    .card .additional .user-card::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 10%;
+        right: -2px;
+        height: 80%;
+        border-left: 2px solid rgba(0, 0, 0, 0.025);
+    }
+
+    .card .additional .user-card .level,
+    .card .additional .user-card .points,
+    .card .additional .user-card .achievement {
+        top: 15%;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 0.75em;
+        font-weight: bold;
+        background: grey;
+        padding: 0.125rem 0.75rem;
+        border-radius: 100px;
+        white-space: nowrap;
+    }
+
+    .card .additional .user-card .points {
+        top: 85%;
+    }
+
+    .card .additional .user-card .achievement {
+        top: 5%;
+        color: white;
+        border-radius: 20px;
+        background: darkcyan;
+        font-size: 1em;
+    }
+
+    .card .additional .user-card svg {
+        top: 50%;
+    }
+
+    .card .additional .more-info {
+        width: 300px;
+        float: left;
+        position: absolute;
+        left: 150px;
+        height: 100%;
+    }
+
+    .card .additional .more-info h1 {
+        color: #fff;
+        margin-bottom: 0;
+    }
+
+    .card.green .additional .more-info h1 {
+        color: #224C36;
+    }
+
+    .card .additional .coords {
+        margin: 0 1rem;
+        color: #fff;
+        font-size: 1rem;
+    }
+
+    .card.green .additional .coords {
+        color: #325C46;
+    }
+
+    .card .additional .coords span+span {
+        float: right;
+    }
+
+    .card .additional .stats {
+        font-size: 2rem;
+        display: flex;
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+        top: auto;
+        color: #fff;
+    }
+
+    .card.green .additional .stats {
+        color: #325C46;
+    }
+
+    .card .additional .stats>div {
+        flex: 1;
+        text-align: center;
+    }
+
+    .card .additional .stats i {
+        display: block;
+    }
+
+    .card .additional .stats div.title {
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .card .additional .stats div.value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .card .additional .stats div.value.infinity {
+        font-size: 2.5rem;
+    }
+
+    .card .general {
+        width: 300px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
+        box-sizing: border-box;
+        padding: 1rem;
+        padding-top: 0;
+    }
+
+    .card .general .more {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        font-size: 0.9em;
+    }
+
+    /*Lets start with the cloud formation rather*/
+
+/*The container will also serve as the SKY*/
+
+*{ margin: 0; padding: 0;}
+
+body {
+	/*To hide the horizontal scroller appearing during the animation*/
+	overflow: hidden;
+}
+
+
+
+/*Time to finalise the cloud shape*/
+.cloud {
+	width: 200px; height: 60px;
+	
+	border-radius: 200px;
+	-moz-border-radius: 200px;
+	-webkit-border-radius: 200px;
+	
+	position: relative; 
+}
+
+.cloud:before, .cloud:after {
+	content: '';
+	position: absolute; 
+	background: #fff;
+	width: 100px; height: 80px;
+	position: absolute; top: -15px; left: 10px;
+	
+	border-radius: 100px;
+	-moz-border-radius: 100px;
+	-webkit-border-radius: 100px;
+	
+	-webkit-transform: rotate(30deg);
+	transform: rotate(30deg);
+	-moz-transform: rotate(30deg);
+}
+
+.cloud:after {
+	width: 120px; height: 120px;
+	top: -55px; left: auto; right: 15px;
+}
+
+/*Time to animate*/
+.x1 {
+	-webkit-animation: moveclouds 15s linear infinite;
+	-moz-animation: moveclouds 15s linear infinite;
+	-o-animation: moveclouds 15s linear infinite;
+}
+
+/*variable speed, opacity, and position of clouds for realistic effect*/
+.x2 {
+	left: 200px;
+	
+	-webkit-transform: scale(0.6);
+	-moz-transform: scale(0.6);
+	transform: scale(0.6);
+	opacity: 0.6; /*opacity proportional to the size*/
+	
+	/*Speed will also be proportional to the size and opacity*/
+	/*More the speed. Less the time in 's' = seconds*/
+	-webkit-animation: moveclouds 25s linear infinite;
+	-moz-animation: moveclouds 25s linear infinite;
+	-o-animation: moveclouds 25s linear infinite;
+}
+
+.x3 {
+	left: -250px; top: -200px;
+	
+	-webkit-transform: scale(0.8);
+	-moz-transform: scale(0.8);
+	transform: scale(0.8);
+	opacity: 0.8; /*opacity proportional to the size*/
+	
+	-webkit-animation: moveclouds 20s linear infinite;
+	-moz-animation: moveclouds 20s linear infinite;
+	-o-animation: moveclouds 20s linear infinite;
+}
+
+.x4 {
+	left: 470px; top: -250px;
+	
+	-webkit-transform: scale(0.75);
+	-moz-transform: scale(0.75);
+	transform: scale(0.75);
+	opacity: 0.75; /*opacity proportional to the size*/
+	
+	-webkit-animation: moveclouds 18s linear infinite;
+	-moz-animation: moveclouds 18s linear infinite;
+	-o-animation: moveclouds 18s linear infinite;
+}
+
+.x5 {
+	left: -150px; top: -150px;
+	
+	-webkit-transform: scale(0.8);
+	-moz-transform: scale(0.8);
+	transform: scale(0.8);
+	opacity: 0.8; /*opacity proportional to the size*/
+	
+	-webkit-animation: moveclouds 20s linear infinite;
+	-moz-animation: moveclouds 20s linear infinite;
+	-o-animation: moveclouds 20s linear infinite;
+}
+
+@-webkit-keyframes moveclouds {
+	0% {margin-left: 1000px;}
+	100% {margin-left: -1000px;}
+}
+@-moz-keyframes moveclouds {
+	0% {margin-left: 1000px;}
+	100% {margin-left: -1000px;}
+}
+@-o-keyframes moveclouds {
+	0% {margin-left: 1000px;}
+	100% {margin-left: -1000px;}
+}
+
+</style>
+<div id="clouds">
+	<div class="cloud x1"></div>
+	<!-- Time for multiple clouds to dance around -->
+	<div class="cloud x2"></div>
+	<div class="cloud x3"></div>
+	<div class="cloud x4"></div>
+	<div class="cloud x5"></div>
+
+    <% let rowNum=0 %>
+        <%= for (playerInfo) in playerInfoes { %>
+            <%= if (rowNum==0) {%>
+                <div class="topDiv">
+                    <div class="card">
+                        <div class="additional" style="background: linear-gradient(gold, gold);">
+                            <div class="user-card">
+                                <div class="achievement center">
+                                    <%= playerInfo.PcurAchive %>
+                                </div>
+                                <div class="level center">
+                                    Level
+                                    <%= playerInfo.Plevel %>
+                                </div>
+                                <div class="points center">
+                                    <%= playerInfo.Pscore %> Points
+                                </div>
+
+                                <style>
+                                    .skin {
+                                        fill: #eab38f;
+                                    }
+
+                                    .eyes {
+                                        fill: #1f1f1f;
+                                    }
+
+                                    .hair {
+                                        fill: #2f1b0d;
+                                    }
+
+                                    .line {
+                                        fill: none;
+                                        stroke: #2f1b0d;
+                                        stroke-width: 2px;
+                                    }
+                                </style>
+                                <div class="center">
+                                    <a href="/players/<%=playerInfo.ID%>">
+                                        <img src="<%= playerInfo.Pavatar %>" width="125" height="125" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="more-info">
+                                <h1>
+                                    <%= playerInfo.PcurAchive %>
+                                </h1>
+                                <div class="coords">
+                                    <span style="font-size: 1.5em">Promoted On</span>
+                                    <span style="font-size: 1.5em">
+                                        <%= playerInfo.UpdatedAt.Format("02 Jan 2006") %>
+                                    </span>
+                                </div>
+                                <div class="coords">
+                                    <span style="font-size: 1.5em">Email Id</span>
+                                    <span style="font-size: 1.5em">
+                                        <%= playerInfo.Pemailid %>
+                                    </span>
+                                </div>
+                                <div class="stats">
+                                    <div>
+                                        <div class="title">Awards</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="general">
+                            <h3>
+                                <%= playerInfo.Pname %>
+                            </h3>
+                            <p>
+                                <div class="stats">
+                                    <div>
+                                        <div>
+                                            <%= for (badge) in playerInfo.Badges { %>
+                                                <img id="img-badge1" src="<%= badge %>" height="30" width="30"> </img>
+                                                <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p>
+                            <span class="more">Mouse over the card for more info</span>
+                        </div>
+                    </div>
+                </div>
+                <%} rowNum = rowNum + 1 }%>
+                    <div class="center scroll">
+                        <% let rowNum=0 %>
+                            <%= for (playerInfo) in playerInfoes { %>
+                                <%= if (rowNum==1 || rowNum==2) {%>
+                                    <div class="card">
+                                        <%=if (rowNum==1) {%>
+                                        <div class="additional" style="background: linear-gradient(silver, silver);">
+                                        <% } else { %>
+                                        <div class="additional" style="background: linear-gradient(#cd7f32, #cd7f32);">
+                                        <% } %>
+                                            <div class="user-card">
+                                                <div class="achievement center">
+                                                    <%= playerInfo.PcurAchive %>
+                                                </div>
+                                                <div class="level center">
+                                                    Level
+                                                    <%= playerInfo.Plevel %>
+                                                </div>
+                                                <div class="points center">
+                                                    <%= playerInfo.Pscore %> Points
+                                                </div>
+
+                                                <style>
+                                                    .skin {
+                                                        fill: #eab38f;
+                                                    }
+
+                                                    .eyes {
+                                                        fill: #1f1f1f;
+                                                    }
+
+                                                    .hair {
+                                                        fill: #2f1b0d;
+                                                    }
+
+                                                    .line {
+                                                        fill: none;
+                                                        stroke: #2f1b0d;
+                                                        stroke-width: 2px;
+                                                    }
+                                                </style>
+                                                <div class="center">
+                                                    <a href="/players/<%=playerInfo.ID%>">
+                                                        <img src="<%= playerInfo.Pavatar %>" width="125" height="125" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="more-info">
+                                                <h1>
+                                                    <%= playerInfo.PcurAchive %>
+                                                </h1>
+                                                <div class="coords">
+                                                    <span style="font-size: 1.5em">Promoted On</span>
+                                                    <span style="font-size: 1.5em">
+                                                        <%= playerInfo.UpdatedAt.Format("02 Jan 2006") %>
+                                                    </span>
+                                                </div>
+                                                <div class="coords">
+                                                    <span style="font-size: 1.5em">Email Id</span>
+                                                    <span style="font-size: 1.5em">
+                                                        <%= playerInfo.Pemailid %>
+                                                    </span>
+                                                </div>
+                                                <div class="stats">
+                                                    <div>
+                                                        <div class="title">Awards</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="general">
+                                            <h3>
+                                                <%= playerInfo.Pname %>
+                                            </h3>
+                                            <p>
+                                                <div class="stats" style:"white-space: wrap">
+                                                    <div>
+                                                        <div>
+                                                            <%= for (badge) in playerInfo.Badges { %>
+                                                                <img id="img-badge1" src="<%= badge %>" height="30" width="30"> </img>
+                                                                <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </p>
+                                            <span class="more">Mouse over the card for more info</span>
+                                        </div>
+                                    </div>
+                                    <% } rowNum = rowNum + 1 
+    }%>
+                    </div>
+                    <% let rowNum=0 %>
+                        <div class="bottomDiv scroll">
+                            <%= for (playerInfo) in playerInfoes { %>
+                                <%= if (rowNum > 2) {%>
+                                    <div class="card">
+                                        <div class="additional" style="background: linear-gradient(lightgreen, green);">
+                                            <div class="user-card">
+                                                <div class="achievement center">
+                                                    <%= playerInfo.PcurAchive %>
+                                                </div>
+                                                <div class="level center">
+                                                    Level
+                                                    <%= playerInfo.Plevel %>
+                                                </div>
+                                                <div class="points center">
+                                                    <%= playerInfo.Pscore %> Points
+                                                </div>
+
+                                                <style>
+                                                    .skin {
+                                                        fill: #eab38f;
+                                                    }
+
+                                                    .eyes {
+                                                        fill: #1f1f1f;
+                                                    }
+
+                                                    .hair {
+                                                        fill: #2f1b0d;
+                                                    }
+
+                                                    .line {
+                                                        fill: none;
+                                                        stroke: #2f1b0d;
+                                                        stroke-width: 2px;
+                                                    }
+                                                </style>
+                                                <div class="center">
+                                                    <a href="/players/<%=playerInfo.ID%>">
+                                                        <img src="<%= playerInfo.Pavatar %>" width="125" height="125" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="more-info">
+                                                <h1>
+                                                    <%= playerInfo.PcurAchive %>
+                                                </h1>
+                                                <div class="coords">
+                                                    <span style="font-size: 1.5em">Promoted On</span>
+                                                    <span style="font-size: 1.5em">
+                                                        <%= playerInfo.UpdatedAt.Format("02 Jan 2006") %>
+                                                    </span>
+                                                </div>
+                                                <div class="coords">
+                                                    <span style="font-size: 1.5em">Email Id</span>
+                                                    <span style="font-size: 1.5em">
+                                                        <%= playerInfo.Pemailid %>
+                                                    </span>
+                                                </div>
+                                                <div class="stats">
+                                                    <div>
+                                                        <div class="title">Awards</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="general">
+                                            <h3>
+                                                <%= playerInfo.Pname %>
+                                            </h3>
+                                            <p>
+                                                <div class="stats">
+                                                    <div>
+                                                        <div>
+                                                            <%= for (badge) in playerInfo.Badges { %>
+                                                                <img id="img-badge1" src="<%= badge %>" height="30" width="30"> </img>
+                                                                <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </p>
+                                            <span class="more">Mouse over the card for more info</span>
+                                        </div>
+                                    </div>
+                        <% } rowNum = rowNum + 1 } %>
+                        </div>
+
+</div>
+
+</div>

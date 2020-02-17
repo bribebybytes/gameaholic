@@ -1,0 +1,48 @@
+<div class="page-header">
+  <h1>Player#Show</h1>
+</div>
+
+<ul class="list-unstyled list-inline">
+  <li class="list-inline-item">
+    <%= linkTo(playersPath(), {class: "btn btn-info"}) { %>
+      Back to all Players
+    <% } %>
+  </li>
+  <li class="list-inline-item">
+    <%= linkTo(editPlayerPath({ player_id: player.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+  </li>
+  <li class="list-inline-item">
+    <%= linkTo(playerPath({ player_id: player.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+  </li>
+</ul>
+
+<p>
+  <strong>Pid</strong>: <%= player.Pid %>
+</p>
+<p>
+  <strong>Pname</strong>: <%= player.Pname %>
+</p>
+<p>
+  <strong>Pavatar</strong>: <%= player.Pavatar %>
+</p>
+<p>
+  <strong>Pemailid</strong>: <%= player.Pemailid %>
+</p>
+<p>
+  <strong>PcurAchive</strong>: <%= player.PcurAchive %>
+</p>
+<p>
+  <strong>Pscore</strong>: <%= player.Pscore %>
+</p>
+<p>
+  <strong>Plevel</strong>: <%= player.Plevel %>
+</p>
+<p>
+  <strong>BitbucketUname</strong>: <%= player.BitbucketUname %>
+</p>
+<p>
+  <strong>JiraUname</strong>: <%= player.JiraUname %>
+</p>
+<p>
+  <strong>ConfluenceUname</strong>: <%= player.ConfluenceUname %>
+</p>

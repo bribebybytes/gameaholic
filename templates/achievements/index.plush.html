@@ -1,0 +1,41 @@
+<div class="page-header">
+  <h1>Achievements</h1>
+</div>
+<ul class="list-unstyled list-inline">
+  <li>
+    <%= linkTo(newAchievementsPath(), {class: "btn btn-primary"}) { %>
+      Create New Achievement
+    <% } %>
+  </li>
+</ul>
+
+<table class="table table-striped">
+  <thead>
+  <th>Aid</th>
+    <th>Aname</th>
+    <th>Alevel</th>
+    <th>Aavatar</th>
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
+    <%= for (achievement) in achievements { %>
+      <tr>
+      <td><%= achievement.Aid %></td>
+        <td><%= achievement.Aname %></td>
+        <td><%= achievement.Alevel %></td>
+        <td><%= achievement.Aavatar %></td>
+        <td>
+          <div class="pull-right">
+            <%= linkTo(achievementPath({ achievement_id: achievement.ID }), {class: "btn btn-info", body: "View"}) %>
+            <%= linkTo(editAchievementPath({ achievement_id: achievement.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+            <%= linkTo(achievementPath({ achievement_id: achievement.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+          </div>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= paginator(pagination) %>
+</div>
