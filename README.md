@@ -71,12 +71,13 @@ Configure database.yml or setup following environment variables to override defa
 3. **`DATABASE_USER`** - defaults to `root`
 4. **`DATABASE_PASSWORD`** - defaults to `root`
 
-> [!WARNING]
+{{box op="start" cssClass="boxed noteBox"}}
 > Please use defaults only for development setup
+{{box op="end"}}
 
-
-> [!WARNING]
+{{box op="start" cssClass="boxed noteBox"}}
 > Setup your own database backup restore solution. We suggest taking mysql dumps and restoring periodically.
+{{box op="end"}}
 
 ##### Default Setup
 Bootstrap setup can be invoked using buffalo pop. Ensure mysql is running and database.yml or environment variables are setup correctly. 
@@ -99,8 +100,11 @@ docker exec -it gameaholic_mysql sh -c "mysql -p<<password>> gameaholic < *_crea
 1. Ensure mysqldump is available 
 2. Ensure database.yml or database environment variables are configured correctly 
 
-> [!WARNING]
+
+
+{{box op="start" cssClass="boxed noteBox"}}
 > Even if using docker-compose up for mysql. We need to have [mysqldump](https://dev.mysql.com/downloads/installer/) available locally to run migration steps if you want to use buffalo pop [soda wrapper].
+{{box op="end"}}
 
 ### Build and Run Commands
 
