@@ -2,10 +2,10 @@
 development:
   dialect: "mysql"
   database: "gameaholic"
-  host: "localhost"
-  port: "3306"
-  user: "root"
-  password: "root"
+  host: {{envOr "DATABASE_HOST" "localhost"}}
+  port: {{envOr "DATABASE_PORT" "3306"}}
+  user: {{envOr "DATABASE_USER" "root"}}
+  password: {{envOr "DATABASE_PASSWORD" "root"}}
 
 test:
   dialect: "mysql"
