@@ -48,7 +48,6 @@ As gameaholic was developed in 72 hrs during a hackathon we used rapid applicati
 
 To install buffalo refer buffalo official [documentation](https://gobuffalo.io/en/docs/getting-started/installation)
 
->[!WARNING]
 >For windows 10, sometimes GCC needs to be installed separately refer [here](https://blog.gobuffalo.io/install-buffalo-on-windows-10-e08b3aa304a3)
 
 
@@ -71,13 +70,9 @@ Configure database.yml or setup following environment variables to override defa
 3. **`DATABASE_USER`** - defaults to `root`
 4. **`DATABASE_PASSWORD`** - defaults to `root`
 
-{{box op="start" cssClass="boxed noteBox"}}
-> Please use defaults only for development setup
-{{box op="end"}}
+=> Please use defaults only for development setup
 
-{{box op="start" cssClass="boxed noteBox"}}
 > Setup your own database backup restore solution. We suggest taking mysql dumps and restoring periodically.
-{{box op="end"}}
 
 ##### Default Setup
 Bootstrap setup can be invoked using buffalo pop. Ensure mysql is running and database.yml or environment variables are setup correctly. 
@@ -102,9 +97,7 @@ docker exec -it gameaholic_mysql sh -c "mysql -p<<password>> gameaholic < *_crea
 
 
 
-{{box op="start" cssClass="boxed noteBox"}}
 > Even if using docker-compose up for mysql. We need to have [mysqldump](https://dev.mysql.com/downloads/installer/) available locally to run migration steps if you want to use buffalo pop [soda wrapper].
-{{box op="end"}}
 
 ### Build and Run Commands
 
