@@ -26,3 +26,6 @@ jobs:
 
     - name: Build
       run: go build -v .
+
+    - name: Release GitHub Actions
+      uses: technote-space/release-github-actions@v3.0.2
