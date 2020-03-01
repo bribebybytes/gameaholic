@@ -79,16 +79,21 @@ Bootstrap setup can be invoked using buffalo pop. Ensure mysql is running and da
 
 Either this can be setup manually or using buffalo pop
 
-###### Manual setup
+###### Mysql Restore Manual
 Use mysqldump or run contents of files under Migration directory with file name like *.create_bootstrap.mysql.up.sql
 
 
-
-```bash
+```
 # Replace <<password>> with your root password
-docker exec -it gameaholic_mysql sh -c  "mysql -p<<password>> -e 'create database gameaholic;'"
-docker cp .\migrations\*_create_bootstraps.mysql.up.sql  gameaholic_mysql:\
-docker exec -it gameaholic_mysql sh -c "mysql -p<<password>> gameaholic < *_create_bootstraps.mysql.up.sql" 
+mysql -p<<password>> -e 'create database gameaholic;'
+mysql -p<<password>> gameaholic < *_create_bootstraps.mysql.up.sql
+```
+
+###### Starting Mysql using Docker-compose
+
+Docker-compose  will start the mysql server and restore bootstrap database
+```
+docker-compose up -d
 ```
 
 ###### Using Buffalo Pop (Soda)
