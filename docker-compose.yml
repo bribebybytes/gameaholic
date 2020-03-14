@@ -12,18 +12,18 @@ services:
       MYSQL_PASS: 'gameaholic'
     volumes:
       - my-datavolume:/var/lib/mysql
-      - $PWD/migrations:/var/run/mysqld/
+      # - $PWD/migrations:/var/run/mysqld/
 
-  mysql_restore:
-    image: mysql:latest
-    container_name: mysql_restore
-    command: bash /var/run/mysqld/migration.sh
-    environment:
-      MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_USER: 'gameaholic'
-      MYSQL_PASS: 'gameaholic'
-    volumes:
-      - $PWD/migrations:/var/run/mysqld/
+  # mysql_restore:
+  #   image: mysql:latest
+  #   container_name: mysql_restore
+  #   command: bash /var/run/mysqld/migration.sh
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: 'root'
+  #     MYSQL_USER: 'gameaholic'
+  #     MYSQL_PASS: 'gameaholic'
+  #   volumes:
+  #     - $PWD/migrations:/var/run/mysqld/
 
 volumes:
   my-datavolume:
