@@ -3,6 +3,7 @@ module bribebybytes.in/gameaholic
 go 1.13
 
 require (
+	cloud.google.com/go v0.36.0 // indirect
 	github.com/cockroachdb/cockroach-go v0.0.0-20190925194419-606b3d062051 // indirect
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/gobuffalo/buffalo v0.14.11
@@ -16,6 +17,7 @@ require (
 	github.com/gobuffalo/mw-paramlogger v0.0.0-20190129202837-395da1998525
 	github.com/gobuffalo/nulls v0.2.0 // indirect
 	github.com/gobuffalo/packd v1.0.0 // indirect
+	github.com/gobuffalo/packr v1.25.0 // indirect
 	github.com/gobuffalo/packr/v2 v2.7.1
 	github.com/gobuffalo/pop v4.13.1+incompatible
 	github.com/gobuffalo/suite v2.8.2+incompatible
