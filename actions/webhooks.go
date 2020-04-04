@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"io/ioutil"
 
+	"bribebybytes.in/gameaholic/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
 	bitbucketserver "gopkg.in/go-playground/webhooks.v5/bitbucket-server"
-	"bribebybytes.in/gameaholic/models"
 )
 
 //EventScore holds score for each event that will be added to the player
@@ -79,7 +79,7 @@ func AddScore(c buffalo.Context, userkey string, provider string, score int) err
 		}
 	}
 
-	// Validate the data from the html form
+	// Validate the data from the html form. Pls validate this working!!
 	err = tx.UpdateColumns(player)
 
 	return err
