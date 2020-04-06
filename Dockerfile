@@ -5,6 +5,9 @@ FROM gobuffalo/buffalo:v0.15.4 as builder
 RUN mkdir -p $GOPATH/src/bribebybytes.in/gameaholic
 WORKDIR $GOPATH/src/bribebybytes.in/gameaholic
 
+ENV GO111MODULE=on
+
+
 # this will cache the npm install step, unless package.json changes
 ADD package.json .
 RUN npm install --no-progress
@@ -23,8 +26,11 @@ COPY --from=builder /bin/app .
 # Uncomment to run the binary in "production" mode:
 # ENV GO_ENV=production
 
+
 # Bind the app to 0.0.0.0 so it can be seen from outside the container
 ENV ADDR=0.0.0.0
+
+ENV DATABASE_HOST=gameaholic_mysql
 
 EXPOSE 3000
 
