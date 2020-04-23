@@ -1,6 +1,0 @@
-- id: "player_timeline.created.success"
-  translation: "PlayerTimeline was successfully created."
-- id: "player_timeline.updated.success"
-  translation: "PlayerTimeline was successfully updated."
-- id: "player_timeline.destroyed.success"
-  translation: "PlayerTimeline was successfully destroyed."
